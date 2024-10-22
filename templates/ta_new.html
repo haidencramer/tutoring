@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!--add if statement here-->
+<center>
+    <div class="container" style="padding: 20px; text-align: center;">
+        <h1 class="display-5">Add Post to Introduce yourself! Office Hours and Weekdays will auto display based on the information you 
+            signed in with </h1>
+        <div class="container bg-secondary">
+            <br>
+            <hr>
+                <div class="container bg-dark" style="color: red;">
+                    <br>
+                    <form action="" method="post">{% csrf_token %}
+                        {{ form }}
+                        <input type="submit" value="Save">
+                    </form>
+                    <br>
+                </div>
+            <hr>
+            <br>
+            
+        </div>
+    </div>
+</center>
+{% endblock content %}

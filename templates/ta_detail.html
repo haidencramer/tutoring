@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+<hr>
+<center>
+    <div class="container">
+
+        <div class="container bg-secondary">
+            <h2 class="display-5" style="color: blue;">{{ post.title }}</h2>
+            <hr>
+        <div class="bg-light" style="text-align: center;">
+                <br>
+                <b><p class="display-6">Name: </b> {{ post.author.firstname }} {{ post.author.lastname }}</p></b>
+                <b><p class="lead display-6"><b>Post Information</b> - {{ post.body }}</p></b>
+                <hr>
+                
+                <b><p>About the TA:</b> {{ post.author.about }}</p>
+                <b><p>Classes: </b> {{ post.author.classes }}</p>
+                <b><p>Available Hours:</b> {{ post.author.hourAvailable }}</p>
+                <b><p>Available Weekdays: </b>{{ post.author.weekDayAvailable }}</p>
+                <hr>
+                <br>
+        </div>
+        <hr>
+        <br>
+    </div>
+</center>
+<!--add if statement-->
+<br>
+{% if user.is_authenticated %}
+<div class="container bg-light">
+    <center>
+        <br>
+            <p><a href="{% url 'ta_edit' post.pk %}">+ Edit Post</a></p>
+        <br>
+        <hr>
+            <p><a href="{% url 'ta_delete' post.pk %}">+ Delete Post</a></p>
+        <br>
+    </center>
+</div>
+<hr>
+{% endif %}
+{% endblock content %}

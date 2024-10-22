@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+
+<!--Display Users that are Authenticated (TAs) information about adding their info for students view-->
+{% if user.is_authenticated %}
+<h1 class="display-1">Welcome To The Teaching Assistant Portal</h1>
+<div class="container-fluid bg-dark text-info">
+    <h1 class="text-info text-pt" style="text-align:center;">Hello {{ user.firstname }} {{ user.lastname }}! Please feel free to add your Available Hours and Days for students to view on our homepage</h1>
+    <br>
+    <hr>
+    Here is the information we are Sharing with Students:
+    <ul class="text-warning">
+        <li>Your Name: {{ user.firstname }} {{ user.lastname }}</li>
+        <li>About You: {{ user.about}}</li>
+        <li>Classes You Would Teach: {{ user.classes }}</li>
+        <li>Hours Available: {{ user.hourAvailable }}</li>
+        <li>Weekdays Available: {{ user.weekDayAvailable }}</li>
+    </ul>
+    <hr>
+    <br>
+</div>
+<br>
+    <hr>
+    <center>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Log Out</button>
+        </form>
+    </center>
+
+{% else %} 
+
+<!-- Here is what We want for the students to view -->
+<br>
+    <h1 class="display-1" style="text-align:center; color:red;">Welcome To the Fishbowl TA Homepage </h1>
+
+    <div class="container p-3 my-3 bg-dark text-white">
+        <center>
+            <h2>University of Montana CSCI TA Availabilities:</h2>
+            <br>
+                <div class="container-sm bg-secondary">
+                    <h5 class="display-4" style="padding: 2px;"><p class="text-warning">On this page You can access information about TAs and the times they are available!<p></h5>
+                </div>
+                
+                {% for post in posts %}
+
+                <div class="container-fluid">
+                    <hr>
+                    <div class="container-fluid bg-warning" style="padding: 2px;">
+                        <h1 class="display-5">{{ post.title }} by: <a href="{% url 'ta_detail' post.pk %}">{{ post.author.firstname }} {{ post.author.lastname }}</a></h1>
+                    </div>
+                    <hr>
+                    <br>
+                    <div class="container bg-secondary">
+                        
+                        <p class="lead display-6">{{ post.body }}</p>
+                        <div class="container bg-dark">
+                        <b><p>Classes:</b> {{ post.author.classes }}</p>
+                        <b><p>Available Hours:</b> {{ post.author.hourAvailable }}</p>
+                        <b><p>Available Weekdays:</b> {{ post.author.weekDayAvailable }}</p>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </center>
+    </div>
+    
+<hr>
+    <div class="container">
+        <p style="text-align:center;"> <b>Students</b> please disregard this Message: <b><i>If you are a TA you are not Logged In</i></b></p>
+    </div>
+<hr>
+    <center>
+        <a href="#">Back to Top</a>
+    </center>
+{% endif %}
+{% endblock content %}
